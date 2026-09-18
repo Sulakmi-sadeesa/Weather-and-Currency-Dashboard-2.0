@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather & Currency Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">⛅</div>
+        <div>
+          <h1>Weather &amp; Currency <span class="accent">Dashboard</span></h1>
+          <p class="subtitle">Live data from Open-Meteo, Frankfurter &amp; BigDataCloud</p>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <span class="meta-item"><span class="meta-icon">📅</span><span id="today-date">—</span></span>
+        <span class="divider"></span>
+        <span class="meta-item"><span class="meta-icon">🕒</span><span id="current-time">—</span></span>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- WEATHER CARD -->
+      <section class="card weather">
+        <div class="weather-hero">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon weather-icon-badge">☁️</div>
+              <div>
+                <h2>Weather</h2>
+                <p class="card-sub">Current weather &amp; forecast</p>
+              </div>
+            </div>
+            <form id="city-form" class="search-form">
+              <div class="search-wrap">
+                <span class="search-icon">📍</span>
+                <input id="city-input" type="text" placeholder="Enter city..." required />
+              </div>
+              <button type="submit" class="btn-primary">
+                <span class="search-icon-sm">🔍</span> Search
+              </button>
+            </form>
+          </div>
+
+          <div id="weather-loading" class="loading hidden">Loading weather…</div>
+
+          <div id="weather-content">
+            <div class="weather-main">
+              <div class="weather-left">
+                <div class="temp">
+                  <span id="weather-temp">24</span><span class="unit">°C</span>
+                </div>
+                <p class="condition" id="weather-condition">Light drizzle</p>
+                <p class="location"><span class="pin">📍</span><span id="weather-location">Homagama, Sri Lanka</span></p>
+              </div>
+              <div class="weather-right">
+                <div class="weather-icon" id="weather-icon">🌦️</div>
+              </div>
+            </div>
+
+            <div class="details">
+              <div class="detail">
+                <div class="detail-icon">💨</div>
+                <div>
+                  <span>Wind</span>
+                  <strong id="weather-wind">--</strong>
+                </div>
+              </div>
+              <div class="detail">
+                <div class="detail-icon">💧</div>
+                <div>
+                  <span>Humidity</span>
+                  <strong id="weather-humidity">--</strong>
+                </div>
+              </div>
+              <div class="detail">
+                <div class="detail-icon">🌡️</div>
+                <div>
+                  <span>Feels like</span>
+                  <strong id="weather-feels">--</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="weather-bottom">
+          <div class="forecast" id="forecast"></div>
+          <div class="chart-wrap">
+            <canvas id="temp-chart" height="120"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURRENCY CARD -->
+      <section class="card currency">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon currency-icon-badge">💱</div>
+            <div>
+              <h2>Currency Converter</h2>
+              <p class="card-sub">Real-time exchange rates</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="converter">
+          <div class="field">
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" value="100" min="0" step="0.01" />
+          </div>
+          <div class="field">
+            <label for="from">From</label>
+            <div class="select-wrap">
+              <span class="flag" id="from-flag">🇺🇸</span>
+              <select id="from"></select>
+            </div>
+          </div>
+          <div class="field field-full">
+            <label for="to">To</label>
+            <div class="select-wrap">
+              <span class="flag" id="to-flag">🇪🇺</span>
+              <select id="to"></select>
+            </div>
+          </div>
+          <button id="convert-btn" class="btn-primary btn-wide">
+            <span>⇄</span> Convert
+          </button>
+        </div>
+
+        <div id="currency-loading" class="loading hidden">Fetching rate…</div>
+
+        <div id="currency-result">
+          <div class="result-row">
+            <div class="result-side">
+              <span class="flag flag-lg" id="result-from-flag">🇺🇸</span>
+              <div>
+                <p class="result-amount"><span id="result-from-amount">100</span> <span id="result-from-code">USD</span></p>
+                <p class="result-name" id="result-from-name">US Dollar</p>
+              </div>
+            </div>
+            <div class="result-arrow">→</div>
+            <div class="result-side result-side-right">
+              <span class="flag flag-lg" id="result-to-flag">🇪🇺</span>
+              <div>
+                <p class="result-amount"><span id="result-amount">92.45</span> <span id="result-currency">EUR</span></p>
+                <p class="result-name" id="result-to-name">Euro</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-meta">
+            <span class="rate-line">1 <span id="rate-from">USD</span> = <span id="rate-value">0.9245</span> <span id="rate-to">EUR</span></span>
+            <span class="rate-date">🔄 Last updated: <span id="rate-date">—</span></span>
+          </div>
+        </div>
+
+        <div class="chart-wrap small">
+          <canvas id="rate-chart" height="90"></canvas>
+        </div>
+
+        <div class="currency-footer">
+          <span class="fetching" id="fetching-text"><span class="spinner"></span> Fetching rate…</span>
+          <button id="clear-cache" class="btn-ghost">
+            <span>🗑️</span> Clear cached rates
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
