@@ -2,7 +2,7 @@
 
 Live weather (Open-Meteo) + currency conversion (Frankfurter). Zero build step, zero API keys.
 
-[Live Demo](https://<your-username>.github.io/weather-currency-dashboard/)
+[Live Demo](https://<Sulakmi_Sadeesa004>.github.io/weather-currency-dashboard/)
 
 ## Features
 - Geolocation-aware weather with 7-day forecast and hourly temperature chart
@@ -22,6 +22,6 @@ Live weather (Open-Meteo) + currency conversion (Frankfurter). Zero build step, 
 
 ## Run locally
 ```bash
-git clone https://github.com/<you>/weather-currency-dashboard
+git clone https://github.com/<Sulakmi_Sadeesa004>/weather-currency-dashboard
 cd weather-currency-dashboard
 python3 -m http.server 8000
